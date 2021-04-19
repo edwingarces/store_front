@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Input from './Input';
+import Button from './Button';
 
 const Form = () => {
   const vals = {
@@ -22,7 +23,7 @@ const Form = () => {
     e.stopPropagation();
     console.log(values);
   };
-
+  // TODO: agegar un map y ustituir los inputs
   return (
     <>
       <form>
@@ -42,7 +43,7 @@ const Form = () => {
           value={values.description}
           handleChange={handleInputChange}
         />
-        <button onClick={handleSubmit}>Guardar</button>
+        <Button type="submit" action={handleSubmit}>Guardar</Button>
         {error &&
           <span style={{color: 'red'}}>Hay un error</span>
         }
