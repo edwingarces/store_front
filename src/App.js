@@ -6,16 +6,22 @@ import {
 } from 'react-router-dom';
 import Nav from './components/Nav';
 import Home from './containers/Home';
+import Product from './containers/Product';
 import AddProducts from './containers/AddProduct';
 import './App.css';
 
 const routes = [
   {
-    link: '/product',
+    link: '/add-product',
     label: 'Añadir un producto',
+  },
+  {
+    link: '/product',
+    label: 'Ver producto',
   },
 ];
 
+// Añadir nueva ruta a vista de producto
 const App = () => (
   <Router>
     <div className="container-fluid">
@@ -27,6 +33,9 @@ const App = () => (
               <Home />  
             </Route>
             <Route exact path="/product">
+              <Product />
+            </Route>
+            <Route exact path="/add-product">
               <AddProducts />
             </Route>
             <Route>

@@ -10,9 +10,9 @@ const Nav = ({ home, routes }) => (
       </button>
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav me-auto ml-5 mb-2 mb-lg-0">
-          {routes.map((route) => (
+          {routes.map(({link, label}) => (
             <li className="nav-item">
-              <Link to={route.link} className="nav-link active">{route.label}</Link>
+              <Link to={link} className="nav-link active">{label}</Link>
             </li>
           ))}
         </ul>

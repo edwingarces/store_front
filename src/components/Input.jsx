@@ -1,14 +1,18 @@
 import React from 'react';
 
-const Input = ({id, value, type, placeholder, handleChange}) => {
+const Input = ({id, value, type, placeholder, handleChange, label}) => {
   return (
-    <input
-      id={id}
-      type={type ? type : 'text'}
-      value={value}
-      placeholder={placeholder ? placeholder : 'Introduce la información'}
-      onChange={handleChange}
-    />
+    <>
+      <label for={id} className="form-label">{label}</label>
+      <input
+        id={id}
+        className="form-control"
+        type={type}
+        value={value}
+        placeholder={placeholder ? placeholder : 'Introduce la información'}
+        onChange={handleChange}
+      />
+    </>
   );
 };
 
