@@ -3,7 +3,7 @@ import React from 'react';
 const Input = ({id, value, type, placeholder, handleChange, label}) => {
   return (
     <>
-      <label for={id} className="form-label">{label}</label>
+      <label htmlFor={id} className="form-label">{label}</label>
       <input
         id={id}
         className="form-control"

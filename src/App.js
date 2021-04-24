@@ -21,7 +21,13 @@ const routes = [
   },
 ];
 
-// Añadir nueva ruta a vista de producto
+// Añadir un contenedor para agregar una tienda
+// Crear un nuevo formulario para esa tienda
+// Crear un componente de alerta para comunicar errores
+// Crear un componente de alerta para confirmar success
+// Añadir una nueva ruta
+// Añadir un nuevo botón en el menú
+
 const App = () => (
   <Router>
     <div className="container-fluid">

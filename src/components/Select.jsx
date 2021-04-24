@@ -5,11 +5,11 @@ const Select = ({id, label, options, handleChange}) => (
     id={id}
     className="form-select"
     aria-label="Default select example"
-    handleChange={handleChange}
+    onChange={handleChange}
   >
-    <option selected disabled>{label}</option>
+    <option defaultValue="" selected disabled>{label}</option>
     {options.map(({value, label}) => (
-      <option value={value}>{label}</option>
+      <option defaultValue="" value={value}>{label}</option>
     ))}
   </select>
 );
