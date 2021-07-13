@@ -1,35 +1,69 @@
 import React, { useState } from 'react';
 
+const initialState = {
+  name: '',
+  lastName: '',
+  age: '',
+};
+
+// const numeros = {uno: 1, dos: 2, tres: 3};
+
+// const agregarNumero = (nuevoNumero) => {
+//   return {
+//     ...numeros,
+//     ['uno']: nuevoNumero,
+//   };
+// }
+
+// const algo = agregarNumero(4);
+
+// console.log(algo);
+
 const Form = () => {
-  const vals = {
-    name: '',
-    department: 0,
-    description: '',
-  };
-  const [values, setValues] = useState(vals);
-  const handleInputChange = ({ target }) => {
+  const [inputValues, setInputValues] = useState(initialState);
+  const { name, lastName, age } = inputValues;
+  const handleChange = ({ target }) => {
     const { id, value } = target;
-    setValues({
-      ...values,
+    console.log(`id: ${id}, value: ${value}`);
+    setInputValues({
+      ...inputValues,
       [id]: value,
     });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log(values);
-  };
 
   return (
-    <>
-      <form>
-        <input id="name" type="text" value={values.name} placeholder="Nombre" onChange={handleInputChange} />
-        <input id="department" type="number" value={values.department} placeholder="Departamento" onChange={handleInputChange} />
-        <input id="description" type="text" value={values.description} placeholder="Descripción" onChange={handleInputChange} />
-        <button onClick={handleSubmit}>Guardar</button>
-      </form>
-    </>
+    <form>
+      <input
+        id="name"
+        type="text"
+        value={name}
+        placeholder="Nombre"
+        onChange={handleChange}
+      />
+      <input
+        id="lastName"
+        type="text"
+        value={lastName}
+        placeholder="Apellido"
+        onChange={handleChange}
+      />
+      <input
+        id="age"
+        type="number"
+        value={age}
+        placeholder="Edad"
+        onChange={handleChange}
+      />
+      <br />
+      <button type="button">Enviar</button>
+    </form>
   );
 };
+
+// Actividad:
+// Hacer un componente Input
+// <Input id="" type="" plaveholder="" value="" onChange="" />
+// Hacer un componente Button
+// <Button color="" type="button" onClick="">Texto</Button> 
 
 export default Form;
