@@ -1,15 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import Button from '../components/Button';
+import Nav from '../components/Nav';
+import Form from '../components/Form';
+
+const pages = [
+  {
+    route: '/home',
+    label: 'Inicio',
+  },
+  {
+    route: '/about',
+    label: 'Acerca de',
+  },
+  {
+    route: '/contact',
+    label: 'Contacto',
+  },
+];
 
 const Home = () => (
   <>
-    <Header title="Home" />
-    <h3>Bienvenido</h3>
-    <Button type="link">
-      <Link to="/product">Añadir un producto</Link>
-    </Button>
+    <Nav pages={pages} />
+    <Form />
   </>
 );
 
