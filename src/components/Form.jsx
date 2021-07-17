@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Input from './Input';
+import { useParams } from 'react-router';
 
 const initialState = {
   name: '',
@@ -6,21 +8,11 @@ const initialState = {
   age: '',
 };
 
-// const numeros = {uno: 1, dos: 2, tres: 3};
-
-// const agregarNumero = (nuevoNumero) => {
-//   return {
-//     ...numeros,
-//     ['uno']: nuevoNumero,
-//   };
-// }
-
-// const algo = agregarNumero(4);
-
-// console.log(algo);
-
 const Form = () => {
   const [inputValues, setInputValues] = useState(initialState);
+  const [isValid, setIsValid] = useState(true);
+  const [intent, setIntent] = useState('');
+  const { firstName } = useParams();
   const { name, lastName, age } = inputValues;
   const handleChange = ({ target }) => {
     const { id, value } = target;
@@ -31,39 +23,71 @@ const Form = () => {
     });
   };
 
+  const handleSubmit = () => {
+    const nameIsJorge = inputValues.name === 'Jorge';
+    if (!nameIsJorge) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+  };
+
+  useEffect(() => {
+    if (!isValid) {
+      setIntent('warning');
+    }
+  }, [isValid]);
+
+  useEffect(() => {
+    console.log(firstName)
+    if (firstName) {
+      setInputValues({
+        ...inputValues,
+        name: firstName,
+      })
+    }
+  }, []);
+
   return (
     <form>
-      <input
+      <Input
         id="name"
+        label="¿Cuál es tu nombre?"
+        intent={intent}
         type="text"
         value={name}
         placeholder="Nombre"
         onChange={handleChange}
       />
-      <input
+      <br />
+      <Input
         id="lastName"
+        label="¿Cuál es tu apellido?"
+        intent={intent}
         type="text"
         value={lastName}
         placeholder="Apellido"
         onChange={handleChange}
       />
-      <input
+      <br />
+      <Input
         id="age"
+        label="¿Cuál es tu edad?"
+        intent={intent}
         type="number"
         value={age}
         placeholder="Edad"
         onChange={handleChange}
       />
       <br />
-      <button type="button">Enviar</button>
+      <button
+        type="button"
+        onClick={handleSubmit}
+      >
+        Enviar
+      </button>
     </form>
   );
 };
-
-// Actividad:
-// Hacer un componente Input
-// <Input id="" type="" plaveholder="" value="" onChange="" />
-// Hacer un componente Button
-// <Button color="" type="button" onClick="">Texto</Button> 
 
 export default Form;

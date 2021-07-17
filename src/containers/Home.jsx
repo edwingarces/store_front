@@ -1,26 +1,9 @@
 import React from 'react';
-import Nav from '../components/Nav';
-import Form from '../components/Form';
-
-const pages = [
-  {
-    route: '/home',
-    label: 'Inicio',
-  },
-  {
-    route: '/about',
-    label: 'Acerca de',
-  },
-  {
-    route: '/contact',
-    label: 'Contacto',
-  },
-];
+import '../assets/css/styles.css';
 
 const Home = () => (
   <>
-    <Nav pages={pages} />
-    <Form />
+    <h1>Inicio</h1>
   </>
 );
 
