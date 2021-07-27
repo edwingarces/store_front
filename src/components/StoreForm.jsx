@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from './Input';
 import axios from 'axios';
 
 const initialState = {
   name: '',
   address: '',
+  date: '',
 };
 
-const StoreForm = ({ onSuccess }) => {
+const StoreForm = ({ onSuccess, editing, initialValues }) => {
   const [inputs, setInputs] = useState(initialState);
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(false);
@@ -18,8 +19,16 @@ const StoreForm = ({ onSuccess }) => {
       [id]: value,
     });
   };
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    if (!editing) {
+      addNewStore();
+    } else {
+      updateStore();
+    }
+  };
+
+  const addNewStore = async () => {
     try {
       const { data } = await axios.post(
         'http://localhost:3001/api/stores/create',
@@ -28,6 +37,11 @@ const StoreForm = ({ onSuccess }) => {
       if (data.status === 200) {
         setSuccess(true);
         onSuccess();
+        setInputs({
+          ...inputs,
+          name: '',
+          address: '',
+        });
       } else {
         setError(true);
       }
@@ -35,18 +49,68 @@ const StoreForm = ({ onSuccess }) => {
       console.log(e);
       setError(true);
     }
-    
   };
 
-  const {name, address} = inputs
+  const updateStore = async () => {
+    try {
+      const { data } = await axios.put(
+        'http://localhost:3001/api/stores/update',
+        {
+          storeId: initialValues.store_id,
+          name: inputs.name,
+          address: inputs.address,
+        },
+      );
+      if (data.status === 200) {
+        setSuccess(true);
+        onSuccess();
+        setInputs({
+          ...inputs,
+          name: '',
+          address: '',
+        });
+      } else {
+        setError(true);
+      }
+    } catch (e) {
+      console.log(e);
+      setError(true);
+    }
+  };
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+    }
+  }, [success]);
+
+  useEffect(() => {
+    if (editing) {
+      setInputs({
+        ...inputs,
+       name: initialValues.name,
+       address: initialValues.address, 
+      });
+    }
+  }, [editing]);
+
+  const {name, address, date} = inputs
 
   return (
     <>
+      <h2>{editing ?
+        `Actualizar la tienda con id: ${initialValues.store_id}`
+        :
+        'Agregar una nueva tienda'
+      }</h2>
       <form onSubmit={handleSubmit}>
         <Input
           id="name"
           label="¿Cuál es el nombre de la tienda?"
           type="text"
+          defaultValue={name}
           value={name}
           placeholder="Nombre"
           onChange={handleChange}
@@ -61,7 +125,16 @@ const StoreForm = ({ onSuccess }) => {
           onChange={handleChange}
         />
         <br />
-        <button type="submit">Enviar</button>
+        <Input
+          id="date"
+          label="¿Cuál es la fecha?"
+          type="date"
+          value={date}
+          placeholder="Dirección"
+          onChange={handleChange}
+        />
+        <br />
+        <button type="submit">{editing ? 'Actualizar' : 'Enviar'}</button>
       </form>
       {error ? 
         <h1 style={{ color: 'red' }}>Ocurrió un error</h1>
